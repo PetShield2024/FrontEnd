@@ -3,9 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#EFEFEF</color>
+    <color name="grey">#7F7F7F</color>
     <color name="yellow">#FBDE9D</color>
     <color name="purple">#978FED</color>
     <color name="dark_purple">#7469E7</color>
     <color name="light_purple">#2B978FED</color>
-
+    <color name="transparent">#00000000</color>
 </resources>
