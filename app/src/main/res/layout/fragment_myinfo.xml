@@ -133,7 +133,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_edit"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="20dp"
                 android:contentDescription="편집하기"
                 android:layout_centerInParent="true"
