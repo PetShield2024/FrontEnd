@@ -9,4 +9,10 @@
         <item name="android:radius">0dp</item>
         <item name="android:background">@color/light_grey</item>
     </style>
+
+    <style name="RoundCardView" parent="CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:elevation">0dp</item>
+        <item name="cardCornerRadius">10dp</item>
+    </style>
 </resources>
