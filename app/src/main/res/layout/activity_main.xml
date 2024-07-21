@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/btn_back"
+                android:contentDescription="back"
+                android:layout_gravity="start"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="PetShield"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                />
+
+            <ImageButton
+                android:id="@+id/btn_alram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/btn_alram"
+                app:itemRippleColor="@color/grey"
+                android:contentDescription="alram"
+                android:layout_gravity="end"
+                android:visibility="visible" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_frm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="?attr/actionBarSize"
+        android:layout_weight="1"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"/>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/main_bottom_appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:fabCradleMargin="5dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabAlignmentMode="center">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomnavi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:itemRippleColor="@color/grey"
+            android:background="@color/transparent"
+            app:labelVisibilityMode="labeled"
+            app:itemIconTint="@color/selector_nav_color"
+            app:itemTextColor="@color/selector_nav_color"
+            app:menu="@menu/menu_bottom_nav"
+            android:layout_alignParentBottom="true"/>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/main_floating_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_home"
+        android:clickable="true"
+        android:backgroundTint="@color/black"
+        app:itemRippleColor="@color/white"
+        app:tint="@color/white"
+        android:focusable="true"
+        app:layout_anchor="@id/main_bottom_appBar"
+        app:layout_anchorGravity="center"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

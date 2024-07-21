@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:behavior_expandedOffset="100dp"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="10dp">
+
+    <Button
+        android:id="@+id/filter_cancle_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="취소"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/filter_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="필터"
+        android:textColor="@color/purple"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/filter_cancle_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/filter_reset_btn"
+        />
+
+    <Button
+        android:id="@+id/filter_reset_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:text="초기화"
+        android:textColor="@color/black"
+        android:layout_marginEnd="10dp"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/filter_age_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="연령"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_cancle_btn"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Spinner
+        android:id="@+id/filter_age_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="10dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/filter_age_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/filter_size_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사이즈"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_age_spinner"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Spinner
+        android:id="@+id/filter_size_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="10dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/filter_size_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/filter_variety_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="견종"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_size_spinner"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Spinner
+        android:id="@+id/filter_variety_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="10dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/filter_variety_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/filter_sex_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="중성화여부"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_variety_spinner"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Spinner
+        android:id="@+id/filter_sex_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="10dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/filter_sex_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/filter_weight_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비만도"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_sex_spinner"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Spinner
+        android:id="@+id/filter_weight_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginVertical="10dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/filter_weight_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
