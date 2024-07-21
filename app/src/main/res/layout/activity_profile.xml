@@ -166,8 +166,7 @@
                 android:background="@color/light_grey"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="18sp"
-                android:prompt="품종 선택"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/profile_dog_weight_tv"
@@ -206,8 +205,7 @@
                 android:background="@color/light_grey"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="18sp"
-                android:prompt="특이사항 선택"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/profile_dog_size_tv"
@@ -226,8 +224,7 @@
                 android:background="@color/light_grey"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="18sp"
-                android:prompt="사이즈 선택"/>
+                android:textSize="18sp" />
 
 
             <Button

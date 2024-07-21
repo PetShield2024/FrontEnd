@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 대기 화면 -->
+    <TextView
+        android:id="@+id/waiting_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="잠시만 기다려 주세요..."
+        android:visibility="gone"
+        android:layout_gravity="center" />
+
+    <!-- 사료 결과 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/result_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/myfood_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사료 검색 결과:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/myfood_closed_btn_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_closed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myfood_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/myfood_title_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_food" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

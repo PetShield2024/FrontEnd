@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="age_array">
+        <item>1세 이하</item>
+        <item>1-4세</item>
+        <item>5-8세</item>
+        <item>9-13세</item>
+        <item>13세 이상</item>
+    </string-array>
+
+    <string-array name="size_array">
+        <item>소형견</item>
+        <item>중형견</item>
+        <item>대형견</item>
+    </string-array>
+
+    <string-array name="variety_array">
+        <item>포메라니안</item>
+        <item>푸들</item>
+        <item>말티즈</item>
+        <item>비숑</item>
+        <item>리트리버</item>
+    </string-array>
+
+    <string-array name="weight_array">
+        <item>저체중</item>
+        <item>정상</item>
+        <item>비만</item>
+    </string-array>
+</resources>
