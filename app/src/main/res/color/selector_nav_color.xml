@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--바텀네비게이션뷰 아이콘 클릭했을 때 색깔 지정-->
+    <item
+        android:color="@color/black"
+        android:state_checked="true"/>
+
+    <!--바텀네비게이션뷰 아이콘 클릭하지 않았을 때 색깔 지정-->
+    <item
+        android:color="@color/grey"
+        android:state_checked="false"/>
+
+</selector>

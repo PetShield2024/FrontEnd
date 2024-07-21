@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
     <style name="SquareButton" parent="Widget.AppCompat.Button">
         <item name="android:radius">0dp</item>
         <item name="android:background">@color/light_grey</item>
+    </style>
+
+    <style name="RoundCardView" parent="CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:elevation">0dp</item>
+        <item name="cardCornerRadius">10dp</item>
     </style>
 </resources>
