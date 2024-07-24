@@ -92,42 +92,31 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginHorizontal="20dp"
-                >
+            >
 
-                <Button
-                    android:id="@+id/modify_dog_sex_male_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/light_grey"
-                    android:textColor="@color/black"
-                    android:text="수컷"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1" />
+            <RadioButton
+                android:id="@+id/modify_dog_sex_male_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수컷"
+                android:layout_marginEnd="20dp"
+                />
 
-                <Button
-                    android:id="@+id/modify_dog_sex_female_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/light_grey"
-                    android:textColor="@color/black"
-                    android:text="암컷"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_weight="1" />
+            <RadioButton
+                android:id="@+id/modify_dog_sex_female_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="암컷"
+                android:layout_marginEnd="20dp"
+                />
 
-                <Button
-                    android:id="@+id/modify_dog_sex_none_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/light_grey"
-                    android:textColor="@color/black"
-                    android:text="중성화"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
+            <RadioButton
+                android:id="@+id/modify_dog_sex_none_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중성화"
+                />
+        </LinearLayout>
 
             <TextView
                 android:id="@+id/modify_dog_birth_tv"

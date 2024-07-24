@@ -1,13 +1,9 @@
 package com.example.petshield
 
-import FoodFragment
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.petshield.databinding.ItemFoodBinding
+import com.example.petshield.databinding.ItemMyfoodBinding
 
 class MyfoodRVAdapter(private var foods: List<Food>) : RecyclerView.Adapter<MyfoodRVAdapter.ViewHolder>() {
 
@@ -17,41 +13,30 @@ class MyfoodRVAdapter(private var foods: List<Food>) : RecyclerView.Adapter<Myfo
 
     private lateinit var mItemClickListener: MyItemClickListener
 
-    fun setMyItemClickListener(itemClickListener: MyItemClickListener) {
-        mItemClickListener = itemClickListener
+    fun setItemClickListener(listener: MyItemClickListener) {
+        mItemClickListener = listener
     }
 
-    private var filteredList: List<Food> = foods // 필터링된 데이터를 저장할 변수
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemFoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemMyfoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
+    override fun getItemCount(): Int {
+        return foods.size
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(filteredList[position], mItemClickListener)
+        val food = foods[position]
+        holder.bind(food, mItemClickListener)
     }
 
-    override fun getItemCount(): Int = filteredList.size
-
-    fun updateList(filteredList: List<Food>) {
-        this.filteredList = filteredList
-        notifyDataSetChanged()
-    }
-
-    inner class ViewHolder(private val binding: ItemFoodBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemMyfoodBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(food: Food, itemClickListener: MyItemClickListener) {
             with(binding) {
                 itemFoodNameTv.text = food.food_name
                 itemFoodPriceTv.text = "${food.price}원"
-                itemFoodBrandTv.text = food.brand
-
-                food.image?.let {
-                    Glide.with(itemView.context)
-                        .load(it)
-                        .into(itemFoodImgIv)
-                }
 
                 itemFoodSiteIb.setOnClickListener {
                     itemClickListener.onSiteClick(food)

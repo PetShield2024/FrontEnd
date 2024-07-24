@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".WalkActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/btn_back"
+        android:contentDescription="back"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="23dp" />
+
+    <TextView
+        android:id="@+id/walk_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="산책 하는 중.."
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_toEndOf="@id/back_button"
+        android:layout_alignBaseline="@id/back_button"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="60dp"/>
+
+    <ImageButton
+        android:id="@+id/timer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_clock"
+        android:contentDescription="timer"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="70dp"
+        android:layout_marginTop="16dp" />
+
+
+    <!-- Circular Progress Indicator -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicator"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:indicatorSize="200dp"
+        app:trackThickness="20dp"
+        app:indicatorColor="@color/purple_500"
+        app:trackColor="@color/purple_200" />
+
+
+    <!-- Timer Text -->
+    <TextView
+        android:id="@+id/timerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="00:00"
+        android:textColor="@android:color/black"
+        android:textSize="30sp" />
+
+    <!-- Pause Button -->
+    <Button
+        android:id="@+id/pauseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:text="일시정지"
+        android:background="@drawable/rounded_button"
+        android:padding="10dp" />
+
+    <!-- Stop Button -->
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_alignParentEnd="true"
+        android:text="종료"
+        android:background="@drawable/rounded_button"
+        android:padding="10dp" />
+
+</RelativeLayout>

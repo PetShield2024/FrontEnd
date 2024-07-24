@@ -49,6 +49,12 @@ class CameraFragment : Fragment() {
         // 이미지 검사 시작
         binding.testStartTestIb.setOnClickListener {
             // 이미지 검사 시작하는 로직 추가
+
+            // Show ResultFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, ResultFragment())
+                .addToBackStack(null) // Optional: Add to back stack to enable back navigation
+                .commit()
         }
 
         return binding.root
