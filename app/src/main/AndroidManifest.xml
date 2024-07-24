@@ -28,9 +28,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyADjPWoYLW9sheDQAzYxbdNTXHO_URywnc"/>
 
-
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,12 +37,20 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+        </activity>
+
         <activity android:name=".FirstActivity"
             android:exported="true"/>
+
         <activity android:name=".ModifyActivity"
             android:exported="true"/>
+
         <activity android:name=".ProfileActivity"
             android:exported="true"/>
+
         <activity android:name=".WalkActivity"
             android:exported="true"/>
     </application>

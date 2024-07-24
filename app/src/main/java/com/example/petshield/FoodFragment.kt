@@ -11,6 +11,7 @@ import com.example.petshield.FilterFragment
 import com.example.petshield.DataPassListener
 import com.example.petshield.Food
 import com.example.petshield.FoodRVAdapter
+import com.example.petshield.MyfoodFragment
 
 class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassListener {
 
@@ -19,6 +20,8 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
     private var foodDatas = ArrayList<Food>()
 
     private lateinit var filterFragment: FilterFragment
+    private lateinit var myfoodFragment: MyfoodFragment
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +47,10 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
     }
 
     private fun startMyFoodSearch() {
-        TODO("Not yet implemented")
+        myfoodFragment = MyfoodFragment()
+        // FilterFragment에서 선택된 값들을 받기 위해 리스너 설정
+
+        myfoodFragment.show(parentFragmentManager, "MyfoodFragment")
     }
 
     private fun inputDummyFood() {

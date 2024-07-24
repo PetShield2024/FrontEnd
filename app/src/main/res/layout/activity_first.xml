@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/first_title_tv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="최초 사진 등록"
         android:textSize="36sp"
@@ -18,35 +18,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <ImageButton
         android:id="@+id/first_album_ib"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/btn_album"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
         android:contentDescription="앨범에서 선택하기"
-        android:layout_centerInParent="true"
-        app:itemRippleColor="@color/purple"
         app:layout_constraintTop_toBottomOf="@id/first_title_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/first_selected_iv"/>
 
-
     <ImageView
         android:id="@+id/first_selected_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/img_heart_graph"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@id/first_album_ib"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/first_retry_ib"/>
+        app:layout_constraintBottom_toTopOf="@id/first_retry_ib" />
 
     <ImageButton
         android:id="@+id/first_retry_ib"
@@ -54,11 +48,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/btn_re_camera"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
         android:contentDescription="다시찍기"
-        android:layout_centerInParent="true"
-        app:itemRippleColor="@color/purple"
         app:layout_constraintTop_toBottomOf="@id/first_selected_iv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/first_start_first_ib"
@@ -70,17 +60,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/btn_start_test"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
         android:contentDescription="검사하기"
-        android:layout_centerInParent="true"
-        app:itemRippleColor="@color/purple"
         app:layout_constraintTop_toBottomOf="@id/first_selected_iv"
-        app:layout_constraintStart_toEndOf="@+id/first_retry_ib"
+        app:layout_constraintStart_toEndOf="@id/first_retry_ib"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

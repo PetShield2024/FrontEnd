@@ -80,19 +80,6 @@
         app:itemRippleColor="@color/purple"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/item_food_feed_ib"/>
-
-    <ImageButton
-        android:id="@+id/item_food_feed_ib"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/btn_feed"
-        android:layout_marginEnd="10dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="나만의 사료 찾기"
-        app:itemRippleColor="@color/purple"
-        app:layout_constraintTop_toBottomOf="@id/item_food_site_ib"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

@@ -5,14 +5,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.petshield.databinding.FragmentMyfoodBinding
+import com.example.petshield.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment()  {
+    private lateinit var binding: FragmentResultBinding
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_result, container, false)
+        binding = FragmentResultBinding.inflate(inflater, container, false)
 
-        return view
+        binding.resultNearMapIb.setOnClickListener {
+
+            // Show MapFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MapFragment())
+                .addToBackStack(null) // Optional: Add to back stack to enable back navigation
+                .commit()
+        }
+
+        binding.resultRetryIb.setOnClickListener {
+
+            // Show CameraFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, CameraFragment())
+                .addToBackStack(null) // Optional: Add to back stack to enable back navigation
+                .commit()
+        }
+        return binding.root
     }
 }
