@@ -105,16 +105,32 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun setupBirthdatePicker() {
         binding.profileDogBirthEt.setOnClickListener {
+            // Get current date
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                binding.profileDogBirthEt.setText("$selectedYear-${selectedMonth + 1}-$selectedDay")
-            }, year, month, day)
+            // Create the DatePickerDialog
+            val datePickerDialog = DatePickerDialog(
+                this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    // Set the selected date to the EditText
+                    binding.profileDogBirthEt.setText("$selectedYear-${selectedMonth + 1}-$selectedDay")
+                },
+                year, month, day
+            )
 
+            // Hide the calendar view
+            datePickerDialog.datePicker.setCalendarViewShown(false)
+
+            // Set the background of the dialog to be transparent
+            datePickerDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            // Show the dialog
             datePickerDialog.show()
         }
     }
+
 }
