@@ -37,11 +37,11 @@ class FilterFragment : BottomSheetDialogFragment() {
 
         // Setup your spinners and other UI elements here
         // Example setup for age spinner
-        val ageAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","1세 이하", "1-4세", "5-8세","9-13세","14세 이상"))
+        val ageAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","3개월 이하", "3-10개월", "10-6세","7세 이상"))
         ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterAgeSpinner.adapter = ageAdapter
 
-        val sizeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","소형견", "중형견", "대형견"))
+        val sizeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","3kg 이하", "4-10kg", "11kg 이상"))
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterSizeSpinner.adapter = sizeAdapter
 
