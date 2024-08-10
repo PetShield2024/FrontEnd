@@ -101,4 +101,7 @@ dependencies {
     //fragment data send
     implementation("androidx.fragment:fragment-ktx:1.3.0")
 
+    // kakao
+    implementation("com.kakao.sdk:v2-user:2.7.0")
+
 }

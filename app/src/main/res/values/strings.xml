@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PetShield</string>
+    <string name="kakao_app_key">6b7181031aaa75fb70a05772b0f049e5</string>
 </resources>

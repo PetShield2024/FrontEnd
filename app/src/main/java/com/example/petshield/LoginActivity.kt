@@ -14,9 +14,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginKakaoImg.setOnClickListener {
-            val intent = Intent(this@LoginActivity, ProfileActivity::class.java)
-            startActivity(intent)
-            finish()
+            //val intent = Intent(this@LoginActivity, AuthCodeHandlerActivity::class.java)
+            //startActivity(intent)
         }
     }
 }

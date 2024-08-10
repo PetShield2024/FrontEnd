@@ -1,34 +1,50 @@
 package com.example.petshield
 
+
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.activity.viewModels
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.petshield.databinding.ActivityFirstBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class FirstActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
         private const val REQUEST_IMAGE_PICK = 2
+        private const val REQUEST_PERMISSION_CODE = 100
     }
 
     private lateinit var binding: ActivityFirstBinding
-    private val viewModel: CameraViewModel by viewModels()
+    private var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFirstBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkPermissions()
+
         // 이미지 복원
-        viewModel.selectedImageUri?.let { uri ->
+        selectedImageUri?.let { uri ->
             binding.firstSelectedIv.setImageURI(uri)
         }
 
@@ -44,12 +60,14 @@ class FirstActivity : AppCompatActivity() {
 
         // 이미지 검사 시작
         binding.firstStartFirstIb.setOnClickListener {
-            // 이미지 검사 시작하는 로직 추가
+            selectedImageUri?.let { uri ->
+                uploadImage(uri)
+            } ?: run {
+                Toast.makeText(this, "Please select an image first.", Toast.LENGTH_LONG).show()
+            }
 
-            // 화면 전환
             val intent = Intent(this@FirstActivity, MainActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
@@ -71,14 +89,14 @@ class FirstActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_IMAGE_PICK -> {
                     data?.data?.let { uri ->
-                        viewModel.selectedImageUri = uri
+                        selectedImageUri = uri
                         binding.firstSelectedIv.setImageURI(uri)
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
                     val imageBitmap = data?.extras?.get("data") as? Bitmap
                     imageBitmap?.let {
-                        viewModel.selectedImageUri = getImageUri(this, it)
+                        selectedImageUri = getImageUri(this, it)
                         binding.firstSelectedIv.setImageBitmap(it)
                     }
                 }
@@ -96,5 +114,76 @@ class FirstActivity : AppCompatActivity() {
             null
         )
         return Uri.parse(path ?: "")
+    }
+
+    private fun uploadImage(uri: Uri) {
+        val file = File(getRealPathFromURI(uri)!!)
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+        val dogId = 1L // Replace with actual dogId or get it dynamically if needed
+
+        val call = RetrofitClientApi.retrofitInterface.uploadObesityImage(dogId, body)
+        call.enqueue(object : Callback<ApiResponse<ObesityImageResponse>> {
+            override fun onResponse(
+                call: Call<ApiResponse<ObesityImageResponse>>,
+                response: Response<ApiResponse<ObesityImageResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    val message = responseBody?.message ?: "No message from server"
+                    val obesityImageResponse = responseBody?.result
+                    Toast.makeText(this@FirstActivity, "Upload successful! ID: ${obesityImageResponse?.obesityId}", Toast.LENGTH_LONG).show()
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                    Log.e("UploadError", "Error: ${response.code()} - $errorBody")
+                    Toast.makeText(this@FirstActivity, "Upload failed: $errorBody", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse<ObesityImageResponse>>, t: Throwable) {
+                Log.e("UploadFailure", "Upload error: ${t.message}", t)
+                Toast.makeText(this@FirstActivity, "Upload error: ${t.message}", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun getRealPathFromURI(uri: Uri): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        cursor?.moveToFirst()
+        val columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        val filePath = columnIndex?.let { cursor.getString(it) }
+        cursor?.close()
+        return filePath
+    }
+
+    private fun checkPermissions() {
+        val cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        val readStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        val permissionsNeeded = mutableListOf<String>()
+        if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.CAMERA)
+        }
+        if (readStoragePermission != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (permissionsNeeded.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsNeeded.toTypedArray(), REQUEST_PERMISSION_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // All permissions are granted
+            } else {
+                // Permissions denied
+                Toast.makeText(this, "Permissions are required to access camera and storage.", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

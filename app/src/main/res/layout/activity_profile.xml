@@ -150,14 +150,18 @@
                 android:layout_width="wrap_content"
                 android:text="품종" />
 
-            <Spinner
+
+            <EditText
                 android:id="@+id/profile_dog_kind_lv"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/light_grey"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="10dp"
+                android:paddingStart="10dp"
+                android:hint="포메라니안"
                 android:textSize="18sp"/>
+
 
             <TextView
                 android:id="@+id/profile_dog_weight_tv"
