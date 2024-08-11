@@ -35,7 +35,7 @@ class MyfoodRVAdapter(private var foods: List<Food>) : RecyclerView.Adapter<Myfo
 
         fun bind(food: Food, itemClickListener: MyItemClickListener) {
             with(binding) {
-                itemFoodNameTv.text = food.food_name
+                itemFoodNameTv.text = food.foodName
                 itemFoodPriceTv.text = "${food.price}원"
 
                 itemFoodSiteIb.setOnClickListener {

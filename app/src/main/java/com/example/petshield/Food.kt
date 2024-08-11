@@ -3,8 +3,7 @@ import org.w3c.dom.Text
 import java.io.Serializable
 
 data class Food(
-    var id: Int = 0,
-    var food_name: String = "",
+    var foodName: String = "",
     var price: Int = 0,
 //    var variety : String = "전체",
     var size : String = "전체",
