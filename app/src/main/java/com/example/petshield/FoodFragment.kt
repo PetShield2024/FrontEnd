@@ -75,7 +75,7 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
     override fun onDataPass(
         age: String,
         size: String,
-        variety: String,
+//        variety: String,
         weight: String,
         brand: String,
         origin: String
@@ -84,7 +84,7 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
         // 여기서 선택된 필터에 따라 데이터를 다시 로드하거나 화면을 업데이트하는 등의 작업 수행 가능
         binding.foodAgeTv.text = age
         binding.foodSizeTv.text = size
-        binding.foodVarietyTv.text = variety
+//        binding.foodVarietyTv.text = variety
         binding.foodWeightTv.text = weight
         binding.foodWeightTv.text = brand
         binding.foodWeightTv.text = origin
@@ -96,7 +96,6 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
             // 즉, age="전체"면, age가 1-4세, 5-8세, 9-13세 등 모든 값이 표시되어야함
                     (age == "전체" || food.age == age || food.age == "전체") &&
                     (size == "전체" || food.size == size || food.size == "전체") &&
-                    (variety == "전체" || food.variety == variety || food.variety == "전체") &&
                     (weight == "전체" || food.weight == weight || food.weight == "전체") &&
                             (brand == "전체" || food.brand == brand || food.brand == "전체")&&
                             (origin == "전체" || food.origin == origin || food.origin == "전체")
@@ -108,7 +107,7 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
     }
 
     override fun onSiteClick(food: Food) {
-        val urlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(food.url))
+        val urlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(food.site))
         startActivity(urlIntent)
     }
 }
