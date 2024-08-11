@@ -1,29 +1,43 @@
 package com.example.petshield
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.petshield.databinding.FragmentCameraBinding
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class CameraFragment : Fragment() {
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
         private const val REQUEST_IMAGE_PICK = 2
+        private const val REQUEST_PERMISSION_CODE = 100
     }
 
     private lateinit var binding: FragmentCameraBinding
-    private val viewModel: CameraViewModel by viewModels()
+    private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +46,7 @@ class CameraFragment : Fragment() {
         binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         // 이미지 복원
-        viewModel.selectedImageUri?.let { uri ->
+        selectedImageUri?.let { uri ->
             binding.testSelectedIv.setImageURI(uri)
         }
 
@@ -48,13 +62,11 @@ class CameraFragment : Fragment() {
 
         // 이미지 검사 시작
         binding.testStartTestIb.setOnClickListener {
-            // 이미지 검사 시작하는 로직 추가
-
-            // Show ResultFragment
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, ResultFragment())
-                .addToBackStack(null) // Optional: Add to back stack to enable back navigation
-                .commit()
+            selectedImageUri?.let { uri ->
+                uploadImage(uri)
+            } ?: run {
+                 Toast.makeText(requireContext(), "Please select an image first.", Toast.LENGTH_LONG).show()
+            }
         }
 
         return binding.root
@@ -78,7 +90,7 @@ class CameraFragment : Fragment() {
             when (requestCode) {
                 REQUEST_IMAGE_PICK -> {
                     data?.data?.let { uri ->
-                        viewModel.selectedImageUri = uri
+                        selectedImageUri = uri
                         binding.testSelectedIv.setImageURI(uri)
 
                     }
@@ -86,7 +98,7 @@ class CameraFragment : Fragment() {
                 REQUEST_IMAGE_CAPTURE -> {
                     val imageBitmap = data?.extras?.get("data") as? Bitmap
                     imageBitmap?.let {
-                        viewModel.selectedImageUri = getImageUri(requireContext(), it)
+                        selectedImageUri = getImageUri(requireContext(), it)
                         binding.testSelectedIv.setImageBitmap(it)
                     }
                 }
@@ -105,4 +117,57 @@ class CameraFragment : Fragment() {
         )
         return Uri.parse(path ?: "")
     }
+
+
+    private fun uploadImage(uri: Uri) {
+        val file = File(getRealPathFromURI(uri)!!)
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+        val dogId = 1L // Replace with actual dogId or get it dynamically if needed
+
+        val call = RetrofitClientApi.retrofitInterface.uploadObesityImage(dogId, body)
+        call.enqueue(object : Callback<ApiResponse<ObesityImageResponse>> {
+            override fun onResponse(
+                call: Call<ApiResponse<ObesityImageResponse>>,
+                response: Response<ApiResponse<ObesityImageResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    val message = responseBody?.message ?: "No message from server"
+                    val obesityImageResponse = responseBody?.result
+                    Toast.makeText(requireContext(), "Upload successful! ID: ${obesityImageResponse?.obesityId}", Toast.LENGTH_LONG).show()
+                    // Show ResultFragment
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, ResultFragment())
+                        .addToBackStack(null) // Optional: Add to back stack to enable back navigation
+                        .commit()
+                } else {
+                    val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                    Log.e("UploadError", "Error: ${response.code()} - $errorBody")
+                    Toast.makeText(requireContext(), "Upload failed: $errorBody", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse<ObesityImageResponse>>, t: Throwable) {
+                Log.e("UploadFailure", "Upload error: ${t.message}", t)
+                Toast.makeText(requireContext(), "Upload error: ${t.message}", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+    private fun getRealPathFromURI(uri: Uri): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = requireContext().contentResolver.query(uri, projection, null, null, null)
+        cursor?.let {
+            it.moveToFirst()
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            val filePath = it.getString(columnIndex)
+            it.close()
+            return filePath
+        }
+        return null
+    }
+
+
 }
