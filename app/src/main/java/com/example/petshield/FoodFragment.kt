@@ -90,11 +90,21 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
         binding.foodWeightTv.text = origin
 
 
+        var ageResult = "";
         // 예시로 필터링된 데이터를 처리하는 코드를 작성
         val filteredList = foodDatas.filter { food ->
+            if (age == "1세 이하")
+                    ageResult = "UNDER_1_YEARS";
+            else if (age == "1-7세")
+                    ageResult = "FROM_1_TO_7_YEARS";
+            else if (age == "7세 이상")
+                    ageResult = "OVER_7_YEARS";
+            else
+                    ageResult = "ALL";
+
             // 값이 "전체"인 파라메터는 food에서 해당속성 값이 모두 표시되도록 수정
             // 즉, age="전체"면, age가 1-4세, 5-8세, 9-13세 등 모든 값이 표시되어야함
-                    (age == "전체" || food.age == age || food.age == "전체") &&
+                    (age == "전체" || food.age == ageResult || food.age == "ALL") &&
                     (size == "전체" || food.size == size || food.size == "전체") &&
                     (weight == "전체" || food.weight == weight || food.weight == "전체") &&
                             (brand == "전체" || food.brand == brand || food.brand == "전체")&&

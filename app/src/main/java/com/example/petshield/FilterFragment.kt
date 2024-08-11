@@ -18,7 +18,6 @@ class FilterFragment : BottomSheetDialogFragment() {
     // 스피너에서 선택된 값 저장할 변수들
     private var selectedAge = "전체"
     private var selectedSize = "전체"
-    private var selectedVariety = "전체"
     private var selectedWeight = "전체"
     private var selectedBrand = "전체"
     private var selectedOrigin = "전체"
@@ -37,27 +36,24 @@ class FilterFragment : BottomSheetDialogFragment() {
 
         // Setup your spinners and other UI elements here
         // Example setup for age spinner
-        val ageAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","3개월 이하", "3-10개월", "10-6세","7세 이상"))
+        val ageAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","1세 이하", "1-7세", "7세 이상"))
         ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterAgeSpinner.adapter = ageAdapter
 
-        val sizeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","3kg 이하", "4-10kg", "11kg 이상"))
+        val sizeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","소형견", "중형견", "대형견"))
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterSizeSpinner.adapter = sizeAdapter
 
-        val varietyAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","포메라니안", "푸들", "말티즈","비숑","리트리버"))
-        varietyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.filterVarietySpinner.adapter = varietyAdapter
 
         val weightAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","저체중", "정상", "비만"))
         weightAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterWeightSpinner.adapter = weightAdapter
 
-        val brandAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","닥터", "게더", "로얄캐닌","더텐"))
+        val brandAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","닥터", "캐니소스", "로얄캐닌","힐스", "기타"))
         brandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterBrandSpinner.adapter = brandAdapter
 
-        val originAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","국내", "프랑스", "캐나다", "미국","캐니소스","힐스"))
+        val originAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, arrayOf("전체","국내", "프랑스", "캐나다", "미국","독일"))
         originAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.filterOriginSpinner.adapter = originAdapter
 
@@ -66,13 +62,12 @@ class FilterFragment : BottomSheetDialogFragment() {
             // Apply 버튼 클릭 시 선택된 값들을 인터페이스를 통해 전달
             selectedAge = binding.filterAgeSpinner.selectedItem.toString()
             selectedSize = binding.filterSizeSpinner.selectedItem.toString()
-            selectedVariety = binding.filterVarietySpinner.selectedItem.toString()
             selectedWeight = binding.filterWeightSpinner.selectedItem.toString()
             selectedBrand = binding.filterBrandSpinner.selectedItem.toString()
             selectedOrigin = binding.filterOriginSpinner.selectedItem.toString()
 
 
-            dataPassListener?.onDataPass(selectedAge, selectedSize, selectedVariety, selectedWeight, selectedBrand, selectedOrigin)
+            dataPassListener?.onDataPass(selectedAge, selectedSize, selectedWeight, selectedBrand, selectedOrigin)
             dismiss()
         }
 
@@ -81,7 +76,6 @@ class FilterFragment : BottomSheetDialogFragment() {
             // Reset 버튼 클릭 시 선택된 값을 초기화
             selectedAge = "전체"
             selectedSize = "전체"
-            selectedVariety = "전체"
             selectedWeight = "전체"
             selectedBrand = "전체"
             selectedOrigin = "전체"
@@ -89,7 +83,6 @@ class FilterFragment : BottomSheetDialogFragment() {
             // 스피너를 초기 선택 상태로 설정
             binding.filterAgeSpinner.setSelection(0)
             binding.filterSizeSpinner.setSelection(0)
-            binding.filterVarietySpinner.setSelection(0)
             binding.filterWeightSpinner.setSelection(0)
             binding.filterBrandSpinner.setSelection(0)
             binding.filterOriginSpinner.setSelection(0)
@@ -99,7 +92,6 @@ class FilterFragment : BottomSheetDialogFragment() {
             dataPassListener?.onDataPass(
                 selectedAge,
                 selectedSize,
-                selectedVariety,
                 selectedWeight,
                 selectedBrand,
                 selectedOrigin
