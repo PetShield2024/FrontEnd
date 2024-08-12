@@ -51,6 +51,13 @@ data class DogImageModifyResponse(
     val updatedAt: String?
 )
 
+
+// 강아지 사진 조희 응답
+data class DogImageGetResponse(
+    val dogImageId: Long,
+    val imageUrl: String?
+)
+
 // 강아지 프로필 응답
 data class DogHomeResponse(
     val dogName: String,

@@ -33,7 +33,7 @@ interface RetrofitInterface {
     @PATCH("dogs/{dogId}/modify")
     fun modifyDogProfile(
         @Path("dogId") dogId: Long,
-        @Body dogProfile: DogProfileRequest
+        @Body dogProfile: RequestBody
     ): Call<ApiResponse<DogModifyResponse>>
 
 
@@ -52,6 +52,12 @@ interface RetrofitInterface {
         @Path("dogId") dogId: Long,
         @Part image: MultipartBody.Part?
     ): Call<ApiResponse<DogImageModifyResponse>>
+
+    // 강아지 사진 조회 API
+    @GET("dogs/{dogId}/image/get")
+    fun getDogImage(
+        @Path("dogId") dogId: Long,
+    ): Call<ApiResponse<DogImageGetResponse>>
 
     // 강아지 프로필 조회 API
     @GET("dogs/{dogId}/home")

@@ -2,22 +2,22 @@ package com.example.petshield
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.petshield.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
-    private val imageResIds = intArrayOf(R.drawable.img_graph01, R.drawable.img_graph02, R.drawable.img_graph01)
-
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeVPAdapter: HomeVPAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,22 +25,13 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // Set up the ViewPager2 adapter
-        binding.homeViewPager.adapter = HomeVPAdapter(imageResIds)
-
-        // Set up TabLayout with ViewPager2
-        TabLayoutMediator(binding.homeTabLayout, binding.homeViewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "몸무게 기록"
-                1 -> "걸음 수 기록"
-                else -> "이동거리 기록"
-            }
-        }.attach()
+        // 강아지 프로필과 이미지 조회
+        getDogProfile(1L) // 예시로 dogId를 1로 설정
+        getDogImage(1L)   // 예시로 dogId를 1로 설정
 
         binding.homeWalkIb.setOnClickListener {
             // 화면 전환
             val intent = Intent(requireContext(), WalkActivity::class.java)
-
             startActivity(intent)
         }
 
@@ -56,8 +47,62 @@ class HomeFragment : Fragment() {
                 .show() // Show the dialog
         }
 
-
-
         return binding.root
+    }
+
+    private fun getDogProfile(dogId: Long) {
+        RetrofitClientApi.retrofitInterface.getDogHome(dogId).enqueue(object : Callback<ApiResponse<DogHomeResponse>> {
+            override fun onResponse(
+                call: Call<ApiResponse<DogHomeResponse>>,
+                response: Response<ApiResponse<DogHomeResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val dogProfile = response.body()?.result
+                    dogProfile?.let {
+                        binding.homeProfile01Tv.text = "이름  :  ${it.dogName}"
+                        binding.homeProfile02Tv.text = "생일  :  ${it.birth}"
+                        binding.homeProfile03Tv.text = "종  :  ${it.breed}"
+                        binding.homeProfile04Tv.text = "몸무게  :  ${it.weight} kg"
+                        Toast.makeText(requireContext(), "Upload successful! ID: ${dogProfile.dogName}", Toast.LENGTH_LONG).show()
+
+                    }
+                }
+                else {
+                    val errorBody = response.errorBody()?.string() ?: "Unknown error"
+                    Log.e("UploadError", "Error: ${response.code()} - $errorBody")
+                    Toast.makeText(requireContext(), "Upload failed: $errorBody", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse<DogHomeResponse>>, t: Throwable) {
+                // 에러 처리
+                Toast.makeText(requireContext(), "Upload fail!", Toast.LENGTH_LONG).show()
+                Log.e("UploadFailure", "Upload error: ${t.message}", t)
+
+
+            }
+        })
+    }
+
+    private fun getDogImage(dogId: Long) {
+        RetrofitClientApi.retrofitInterface.getDogImage(dogId).enqueue(object : Callback<ApiResponse<DogImageGetResponse>> {
+            override fun onResponse(
+                call: Call<ApiResponse<DogImageGetResponse>>,
+                response: Response<ApiResponse<DogImageGetResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val dogImage = response.body()?.result
+                    dogImage?.let {
+                        Glide.with(this@HomeFragment)
+                            .load(it.imageUrl)
+                            .into(binding.homeProfileIv)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse<DogImageGetResponse>>, t: Throwable) {
+                // 에러 처리
+            }
+        })
     }
 }

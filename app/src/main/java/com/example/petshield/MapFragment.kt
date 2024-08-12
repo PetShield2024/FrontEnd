@@ -94,7 +94,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun loadAnimalHospitals(latitude: Double, longitude: Double) {
-        RetrofitClient.service.getAnimalHospitals("9107a04751bc4e6a866681e4d8caf97b", 1, 100, "고양시")
+        RetrofitClient.service.getAnimalHospitals("9107a04751bc4e6a866681e4d8caf97b", 1, 50, "고양시")
             .enqueue(object : Callback<AnimalHospitalResponse> {
                 override fun onResponse(call: Call<AnimalHospitalResponse>, response: Response<AnimalHospitalResponse>) {
                     if (response.isSuccessful) {
