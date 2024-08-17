@@ -76,4 +76,9 @@ interface RetrofitInterface {
     fun getFoodList(
         @Query("page") page: Int
     ): Call<ApiResponse<FoodListResponse>>
+
+    @POST("myfoods/{dogId}/recommend-food")
+    fun getFoodRecommendations(
+        @Path("dogId") dogId: Long
+    ): Call<FoodRecommendationResponse>
 }

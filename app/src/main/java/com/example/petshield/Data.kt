@@ -102,6 +102,10 @@ data class FoodItem(
     val createdAt: String
 )
 
+data class FoodRecommendationResponse(
+    val recommendation: String
+)
+
 // API 응답 공통 구조
 // 클라이언트의 ApiResponse 정의
 data class ApiResponse<T>(

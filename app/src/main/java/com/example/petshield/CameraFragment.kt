@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.petshield.databinding.FragmentCameraBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -38,6 +39,8 @@ class CameraFragment : Fragment() {
 
     private lateinit var binding: FragmentCameraBinding
     private var selectedImageUri: Uri? = null
+    private val dogId: Long = 1 // Replace with actual dogId
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +49,8 @@ class CameraFragment : Fragment() {
         binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         // 이미지 복원
-        selectedImageUri?.let { uri ->
-            binding.testSelectedIv.setImageURI(uri)
-        }
+        // Load obesity image
+        loadObesityImage(1L)
 
         // 갤러리 열기
         binding.testAlbumIb.setOnClickListener {
@@ -124,8 +126,6 @@ class CameraFragment : Fragment() {
         val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-        val dogId = 1L // Replace with actual dogId or get it dynamically if needed
-
         val call = RetrofitClientApi.retrofitInterface.uploadObesityImage(dogId, body)
         call.enqueue(object : Callback<ApiResponse<ObesityImageResponse>> {
             override fun onResponse(
@@ -167,6 +167,34 @@ class CameraFragment : Fragment() {
             return filePath
         }
         return null
+    }
+
+    private fun loadObesityImage(dogId: Long) {
+        RetrofitClientApi.retrofitInterface.getObesityImage(dogId)
+            .enqueue(object : Callback<ApiResponse<ObesityGetImageResponse>> {
+                override fun onResponse(
+                    call: Call<ApiResponse<ObesityGetImageResponse>>,
+                    response: Response<ApiResponse<ObesityGetImageResponse>>
+                ) {
+                    if (response.isSuccessful) {
+                        val obesityImageUrl = response.body()?.result?.obesityImage
+                        obesityImageUrl?.let {
+                            // Load image into ImageView using Glide
+                            Glide.with(this@CameraFragment)
+                                .load(it)
+                                .into(binding.testSelectedIv)
+                        } ?: run {
+                            Toast.makeText(context, "Image not available", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Log.e("CameraFragment", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse<ObesityGetImageResponse>>, t: Throwable) {
+                    Log.e("CameraFragment", "Failure: ${t.message}")
+                }
+            })
     }
 
 

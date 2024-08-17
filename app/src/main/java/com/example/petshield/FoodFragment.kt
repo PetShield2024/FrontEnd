@@ -1,3 +1,4 @@
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -6,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +18,10 @@ import com.example.petshield.DataPassListener
 import com.example.petshield.Food
 import com.example.petshield.FoodListResponse
 import com.example.petshield.FoodRVAdapter
+import com.example.petshield.FoodRecommendationResponse
 import com.example.petshield.MyfoodFragment
 import com.example.petshield.RetrofitClientApi
+import com.example.petshield.RetrofitInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,6 +37,7 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
 
     private lateinit var filterFragment: FilterFragment
     private lateinit var myfoodFragment: MyfoodFragment
+    var dogId = 1L;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +50,8 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
         loadFoodData(currentPage)
 
         binding.foodMyfoodIb.setOnClickListener {
-            startMyFoodSearch()
+
+            startMyFoodSearch(dogId)
         }
         binding.foodFilterIb.setOnClickListener {
             openFilterFragment()
@@ -122,9 +128,45 @@ class FoodFragment : Fragment(), FoodRVAdapter.MyItemClickListener, DataPassList
             })
     }
 
-    private fun startMyFoodSearch() {
-        myfoodFragment = MyfoodFragment()
-        myfoodFragment.show(parentFragmentManager, "MyfoodFragment")
+    private fun startMyFoodSearch(dogId: Long) {
+
+        RetrofitClientApi.retrofitInterface.getFoodRecommendations(dogId).enqueue(object : Callback<FoodRecommendationResponse> {
+            override fun onResponse(
+                call: Call<FoodRecommendationResponse>,
+                response: Response<FoodRecommendationResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val recommendationResponse = response.body()
+                    if (recommendationResponse != null) {
+                        // 응답의 recommendation 필드를 사용하여 메시지를 표시합니다.
+                        showAlertDialog(requireContext(), recommendationResponse.recommendation)
+                    } else {
+                        // 실패한 경우
+                        Log.e("FoodFragment", "Error: ${response.errorBody()?.string()}")
+
+                        showAlertDialog(requireContext(), "No recommendation available")
+                    }
+                } else {
+                    // HTTP 오류
+                    Log.e("FoodFragment", "fail: ${response.errorBody()?.string()}")
+
+                    showAlertDialog(requireContext(), "HTTP error: ${response.code()}")                }
+            }
+
+            override fun onFailure(call: Call<FoodRecommendationResponse>, t: Throwable) {
+                // 네트워크 오류
+                showAlertDialog(requireContext(), "Network error: ${t.message}")
+            }
+        })
+    }
+
+    private fun showAlertDialog(context: Context, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle("사료 추천")
+            .setMessage(message)
+            .setPositiveButton("확인", null) // 사용자에게 메시지를 읽은 후 확인 버튼을 눌러 닫을 수 있습니다.
+            .setNegativeButton("Retry") { _, _ -> startMyFoodSearch(dogId) } // 재시도 버튼 추가
+            .show()
     }
 
     private fun openFilterFragment() {
