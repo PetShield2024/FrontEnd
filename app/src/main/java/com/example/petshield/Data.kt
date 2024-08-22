@@ -106,6 +106,12 @@ data class FoodRecommendationResponse(
     val recommendation: String
 )
 
+// 강아지 심박수 조희 응답
+data class DogHeartResponse(
+    val dogHealthDataId: Long,
+    val heartRate: Int
+)
+
 // API 응답 공통 구조
 // 클라이언트의 ApiResponse 정의
 data class ApiResponse<T>(
