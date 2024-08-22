@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:textAlignment="center"
-        android:text="'과체중' \n입니다"
+        android:text=""
         android:textSize="36sp"
         android:textColor="@color/black"
         android:textStyle="bold"

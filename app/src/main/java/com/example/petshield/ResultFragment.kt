@@ -23,6 +23,9 @@ class ResultFragment : Fragment() {
     ): View? {
         binding = FragmentResultBinding.inflate(inflater, container, false)
 
+        // 비만도 결과 api에서 가져온 값을 설정
+        loadObesityResult(dogId)
+
         // Load obesity image
         loadObesityImage(dogId)
 
@@ -70,4 +73,30 @@ class ResultFragment : Fragment() {
                 }
             })
     }
+
+    private fun loadObesityResult(dogId: Long) {
+        RetrofitClientApi.retrofitInterface.getObesityResult(dogId)
+            .enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        result?.let {
+                            binding.resultContentTv.text = "'$it'\n입니다."
+                        } ?: run {
+                            binding.resultContentTv.text = "결과를 불러올 수 없습니다."
+                        }
+                    } else {
+                        Log.e("ResultFragment", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("ResultFragment", "Failure: ${t.message}")
+                }
+            })
+    }
 }
+

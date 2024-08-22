@@ -77,8 +77,15 @@ interface RetrofitInterface {
         @Query("page") page: Int
     ): Call<ApiResponse<FoodListResponse>>
 
+
+    // 나만의 사료 추천
     @POST("myfoods/{dogId}/recommend-food")
     fun getFoodRecommendations(
         @Path("dogId") dogId: Long
     ): Call<FoodRecommendationResponse>
+
+    // 비만도 결과
+    @PATCH("/obesitys/{dogId}/test")
+    fun getObesityResult(@Path("dogId") dogId: Long)
+    : Call<String>
 }
