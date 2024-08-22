@@ -150,7 +150,7 @@
                 app:layout_constraintStart_toEndOf="@id/home_profile_dot04" />
 
             <!-- 심박수 측정 그래프 -->
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/home_heart_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,12 +164,27 @@
                     android:id="@+id/home_heart_graph_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="21dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/img_heart_graph" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/img_heart_rate" />
 
                 <TextView
-                    android:id="@+id/home_heart_graph_tv"
+                    android:id="@+id/home_heart_rate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:text="100"
+                    android:textColor="@color/black"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/home_heart_graph_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/home_heart_explain_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="평균보다\n4 낮아요"
@@ -177,7 +192,10 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="15sp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/home_heart_rate_tv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <Button
                     android:id="@+id/home_how_btn"
@@ -189,8 +207,11 @@
                     android:textColor="@color/grey"
                     android:drawableLeft="@drawable/ic_heart"
                     app:itemRippleColor="@color/light_grey"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/home_heart_explain_tv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/home_tab_layout"
