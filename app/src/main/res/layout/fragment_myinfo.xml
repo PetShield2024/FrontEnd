@@ -11,7 +11,7 @@
                 android:id="@+id/myinfo_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00이 건강 통계"
+                android:text="마이 페이지"
                 android:textSize="36sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"

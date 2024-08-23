@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -36,6 +37,7 @@ class CameraFragment : Fragment() {
         private const val REQUEST_IMAGE_PICK = 2
         private const val REQUEST_PERMISSION_CODE = 100
     }
+    private lateinit var progressDialog: AlertDialog
 
     private lateinit var binding: FragmentCameraBinding
     private var selectedImageUri: Uri? = null
@@ -122,6 +124,8 @@ class CameraFragment : Fragment() {
 
 
     private fun uploadImage(uri: Uri) {
+        showLoadingDialog()  // 로딩 화면 표시
+
         val file = File(getRealPathFromURI(uri)!!)
         val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
@@ -132,6 +136,8 @@ class CameraFragment : Fragment() {
                 call: Call<ApiResponse<ObesityImageResponse>>,
                 response: Response<ApiResponse<ObesityImageResponse>>
             ) {
+                hideLoadingDialog()  // 로딩 화면 숨기기
+
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     val message = responseBody?.message ?: "No message from server"
@@ -150,6 +156,8 @@ class CameraFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ApiResponse<ObesityImageResponse>>, t: Throwable) {
+                hideLoadingDialog()  // 로딩 화면 숨기기
+
                 Log.e("UploadFailure", "Upload error: ${t.message}", t)
                 Toast.makeText(requireContext(), "Upload error: ${t.message}", Toast.LENGTH_LONG).show()
             }
@@ -195,6 +203,20 @@ class CameraFragment : Fragment() {
                     Log.e("CameraFragment", "Failure: ${t.message}")
                 }
             })
+    }
+
+    private fun showLoadingDialog() {
+        progressDialog = AlertDialog.Builder(requireContext())
+            .setView(R.layout.progress_dialog) // 커스텀 로딩 레이아웃 사용 가능
+            .setCancelable(false)
+            .create()
+        progressDialog.show()
+    }
+
+    private fun hideLoadingDialog() {
+        if (::progressDialog.isInitialized && progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
     }
 
 

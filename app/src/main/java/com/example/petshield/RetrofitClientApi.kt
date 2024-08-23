@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClientApi {
     private const val BASE_URL = "http://192.168.42.106:8080/"
+    // private const val BASE_URL = "https://dev.pet-shield.shop/"
 
     private var retrofit: Retrofit? = null
 
