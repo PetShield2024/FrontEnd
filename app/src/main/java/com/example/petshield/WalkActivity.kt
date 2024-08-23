@@ -58,7 +58,7 @@ class WalkActivity : AppCompatActivity() {
             handler.removeCallbacks(runnable)
             // Handle stop logic
             finish()
-            Toast.makeText(this@WalkActivity, timerText.text.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@WalkActivity, timerText.text.toString()+"분 산책했습니다.", Toast.LENGTH_SHORT).show()
         }
 
 
