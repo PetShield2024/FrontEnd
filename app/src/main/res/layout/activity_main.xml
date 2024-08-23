@@ -49,7 +49,7 @@
                 app:itemRippleColor="@color/grey"
                 android:contentDescription="alram"
                 android:layout_gravity="end"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
