@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.petshield.databinding.ActivityWalkBinding
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -57,7 +58,9 @@ class WalkActivity : AppCompatActivity() {
             handler.removeCallbacks(runnable)
             // Handle stop logic
             finish()
+            Toast.makeText(this@WalkActivity, timerText.text.toString(), Toast.LENGTH_SHORT).show()
         }
+
 
         // Start the stopwatch
         handler.postDelayed(runnable, 1000)
