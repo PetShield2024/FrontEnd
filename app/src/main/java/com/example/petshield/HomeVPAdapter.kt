@@ -12,7 +12,7 @@ class HomeVPAdapter (private val imageResIds: IntArray) : RecyclerView.Adapter<H
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-            scaleType = ImageView.ScaleType.CENTER_CROP
+            scaleType = ImageView.ScaleType.FIT_CENTER
         }
         return ImageViewHolder(imageView)
     }

@@ -88,4 +88,10 @@ interface RetrofitInterface {
     @PATCH("/obesitys/{dogId}/test")
     fun getObesityResult(@Path("dogId") dogId: Long)
     : Call<String>
+
+    // 강아지 심박수 조회 API
+    @GET("dogHealths/{dogId}/heart")
+    fun getDogHeart(
+        @Path("dogId") dogId: Long
+    ): Call<ApiResponse<DogHeartResponse>>
 }
