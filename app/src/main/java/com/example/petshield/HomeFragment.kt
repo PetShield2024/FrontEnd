@@ -19,7 +19,7 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val imageResIds = intArrayOf(R.drawable.img_graph01, R.drawable.img_graph_step, R.drawable.img_graph_heart)
+    private val imageResIds = intArrayOf(R.drawable.img_obesity_graph, R.drawable.img_graph_step, R.drawable.img_graph_heart)
     private lateinit var homeVPAdapter: HomeVPAdapter
 
 

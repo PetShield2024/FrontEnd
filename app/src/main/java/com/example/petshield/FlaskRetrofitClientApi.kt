@@ -5,9 +5,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object RetrofitClientApi {
-    private const val BASE_URL = "http://192.168.42.106:8080/"
-    //private const val BASE_URL = "https://dev.pet-shield.shop/"
+object FlaskRetrofitClientApi {
+    private const val BASE_URL = "http://172.30.1.24:5000/"
 
     private var retrofit: Retrofit? = null
 
@@ -19,7 +18,7 @@ object RetrofitClientApi {
             .build()
     }
 
-    val retrofitInterface: RetrofitInterface
+    val retrofitInterface: FlaskRetrofitInterface
         get() {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
@@ -28,6 +27,6 @@ object RetrofitClientApi {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
-            return retrofit!!.create(RetrofitInterface::class.java)
+            return retrofit!!.create(FlaskRetrofitInterface::class.java)
         }
 }
